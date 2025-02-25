@@ -119,7 +119,7 @@ export class TabbedCard extends LitElement {
 
   async _createCard(cardConfig: LovelaceCardConfig) {
     const cardElement = await this._helpers.createCardElement(cardConfig);
-
+    let i=1;
     cardElement.hass = this.hass;
 
     cardElement.addEventListener(
