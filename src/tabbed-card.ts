@@ -9,7 +9,7 @@ import {
   LovelaceCard,
   LovelaceCardConfig,
   LovelaceCardEditor,
-  LovelaceConfig,
+  LovelaceConfig
 } from "custom-card-helpers";
 import "./tabbed-card-editor";
 
@@ -20,13 +20,13 @@ interface mwcTabBarEvent extends Event {
 }
 
 interface TabbedCardConfig extends LovelaceCardConfig {
-  options?: options;
+  options?: Options;
   styles?: {};
   attributes?: {};
   tabs: Tab[];
 }
 
-interface options {
+interface Options {
   defaultTabIndex?: number;
 }
 
@@ -57,13 +57,14 @@ export class TabbedCard extends LitElement {
     "--mdc-tab-text-label-color-default":
       "rgba(var(--rgb-primary-text-color), 0.8)", // Color of an unactivated tab label.
     "--mdc-tab-color-default": "rgba(var(--rgb-primary-text-color), 0.7)", // Color of an unactivated icon.
-    "--mdc-typography-button-font-size": "14px",
+    "--mdc-typography-button-font-size": "14px"
   };
 
   private async loadCardHelpers() {
     this._helpers = await (window as any).loadCardHelpers();
 
-    if (!customElements.get("mwc-tab-bar")) this._helpers.importMoreInfoControl("weather")
+    if (!customElements.get("mwc-tab-bar"))
+      this._helpers.importMoreInfoControl("weather")
   }
 
   static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -86,20 +87,20 @@ export class TabbedCard extends LitElement {
 
     this._styles = {
       ...this._styles,
-      ...this._config.styles,
+      ...this._config.styles
     };
 
     this.loadCardHelpers();
   }
 
   protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>,
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     if (_changedProperties.has("_helpers")) {
       this._createTabs(this._config);
     }
     if (_changedProperties.has("hass") && this._tabs?.length) {
-      this._tabs.forEach((tab) => (tab.card.hass = this.hass));
+      this._tabs.forEach(tab => (tab.card.hass = this.hass));
     }
   }
 
@@ -109,7 +110,7 @@ export class TabbedCard extends LitElement {
         return {
           styles: tab?.styles,
           attributes: { ...config?.attributes, ...tab?.attributes },
-          card: await this._createCard(tab.card),
+          card: await this._createCard(tab.card)
         };
       }),
     );
@@ -119,7 +120,7 @@ export class TabbedCard extends LitElement {
 
   async _createCard(cardConfig: LovelaceCardConfig) {
     const cardElement = await this._helpers.createCardElement(cardConfig);
-    let i=0;
+    let i = 0;
     cardElement.hass = this.hass;
 
     cardElement.addEventListener(
@@ -128,7 +129,7 @@ export class TabbedCard extends LitElement {
         ev.stopPropagation();
         this._rebuildCard(cardElement, cardConfig);
       },
-      { once: true },
+      { once: true }
     );
 
     return cardElement;
@@ -136,7 +137,7 @@ export class TabbedCard extends LitElement {
 
   async _rebuildCard(
     cardElement: LovelaceCard,
-    cardConfig: LovelaceCardConfig,
+    cardConfig: LovelaceCardConfig
   ) {
     console.log("_rebuildCard: ", cardElement, cardConfig);
 
