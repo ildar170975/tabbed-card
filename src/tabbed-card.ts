@@ -1,5 +1,12 @@
 import { nothing } from "lit-html";
-import { LitElement, html, PropertyValues, customElement, state, property } from "lit-element";
+import {
+  LitElement,
+  html,
+  PropertyValues,
+  customElement,
+  state,
+  property
+} from "lit-element";
 import { styleMap } from "lit/directives/style-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import {
