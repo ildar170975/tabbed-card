@@ -175,8 +175,8 @@ export class TabbedCard extends LitElement {
             html`
               <mwc-tab
                 .id="mdc-tab-${tab?.attributes?.persistentID
-                  ? tab?.attributes.persistentID + '-'
-                  : ''}
+                  ? tab?.attributes.persistentID + "-"
+                  : ""}
                   ${Math.random()
                   .toString(36)
                   .substring(2, 9)}"
