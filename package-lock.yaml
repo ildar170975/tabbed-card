@@ -1,6 +1,6 @@
 {
-  "name": "restriction-card",
-  "version": "1.2.0",
+  "name": "tabbed-card",
+  "version": "0.1.0",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
