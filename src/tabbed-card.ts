@@ -80,7 +80,7 @@ export class TabbedCard extends LitElement {
             type: "entity",
             entity: "sun.sun"
           },
-         attributes: { label: "Sun" }
+          attributes: { label: "Sun" }
         }
       ]
     };
@@ -175,11 +175,11 @@ export class TabbedCard extends LitElement {
             html`
               <mwc-tab
                 .id="mdc-tab-${tab?.attributes?.persistentID
-                               ? tab?.attributes.persistentID + '-'
-                               : ''}
+                  ? tab?.attributes.persistentID + '-'
+                  : ''}
                   ${Math.random()
                   .toString(36)
-                  .substring(2,9)}"
+                  .substring(2, 9)}"
                 style=${ifDefined(styleMap(tab?.styles || {}))}
                 label="${tab?.attributes?.label || nothing}"
                 ?hasImageIcon=${tab?.attributes?.icon}
