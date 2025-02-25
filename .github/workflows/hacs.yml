@@ -1,18 +1,31 @@
-name: HACS Action
+name: "Build"
 
 on:
   push:
+    branches: 
+      - master
   pull_request:
-  schedule:
-    - cron: "0 0 * * *"
+    branches: 
+      - master
 
 jobs:
-  hacs:
-    name: HACS Action
-    runs-on: "ubuntu-latest"
+  build:
+    name: Test build
+    runs-on: ubuntu-latest
     steps:
-      - uses: "actions/checkout@v3"
-      - name: HACS Action
-        uses: "hacs/action@main"
+      - uses: actions/checkout@v1
+      - name: Cache Dependencies
+        uses: actions/cache@v4
         with:
-          category: "plugin"
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tabbed-card.js
+          path: dist/tabbed-card.js
