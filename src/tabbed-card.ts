@@ -1,11 +1,11 @@
-import { nothing, PropertyValues } from "lit-html";
+import { nothing, PropertyValueMap } from "lit-html";
 import {
   LitElement,
   html,
   customElement,
   property
 } from "lit-element";
-//import { PropertyValues } from "lit";
+//import { PropertyValueMap } from "lit-";
 //import { state } from "lit/decorators.js";
 import { styleMap } from "lit-html/directives/style-map.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
