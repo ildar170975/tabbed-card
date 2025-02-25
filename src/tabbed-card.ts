@@ -6,7 +6,7 @@ import {
   customElement,
   property
 } from "lit-element";
-import { state } from "lit/decorators.js";
+import { state } from "lit/decorators";
 import { styleMap } from "lit/directives/style-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import {
