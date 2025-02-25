@@ -2,7 +2,7 @@ import { nothing } from "lit-html";
 import {
   LitElement,
   html,
-  PropertyValues,
+  PropertyValueMap,
   customElement,
   property
 } from "lit-element";
