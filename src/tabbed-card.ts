@@ -80,7 +80,7 @@ export class TabbedCard extends LitElement {
             type: "entity",
             entity: "sun.sun"
           },
-         attributes: { .label: "Sun" }
+         attributes: { label: "Sun" }
         }
       ],
     };
