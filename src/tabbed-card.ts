@@ -7,7 +7,7 @@ import {
   property
 } from "lit-element";
 //import { state } from "lit/decorators.js";
-import { styleMap } from "lit/directives/style-map.js";
+import { styleMap } from 'lit-html/directives/style-map.js';
 import { ifDefined } from "lit/directives/if-defined.js";
 import {
   getLovelace,
