@@ -75,8 +75,11 @@ export class TabbedCard extends LitElement {
     return {
       options: {},
       tabs: [
-        { card: {
-          type: "entity", entity: "sun.sun" },
+        {
+          card: {
+            type: "entity",
+            entity: "sun.sun"
+          },
          attributes: { label: "Sun" }
         }],
     };
@@ -167,13 +170,14 @@ export class TabbedCard extends LitElement {
       >
         <!-- no horizontal scrollbar shown when tabs overflow in chrome -->
         ${this._tabs.map(
-          (tab) =>
+          tab =>
             html`
               <mwc-tab
                 .id="mdc-tab-${
                   tab?.attributes?.persistentID ? tab?.attributes.persistentID + '-' : ''
-                }${
-                  Math.random().toString(36).substring(2,9)
+                }${Math.random()
+                    .toString(36)
+                    .substring(2,9)
                 }"
                 style=${ifDefined(styleMap(tab?.styles || {}))}
                 label="${tab?.attributes?.label || nothing}"
@@ -185,7 +189,7 @@ export class TabbedCard extends LitElement {
               >
                 ${tab?.attributes?.icon
                   ? html`
-                      <ha-icon
+                    <ha-icon
                         slot="icon"
                         icon="${tab?.attributes?.icon}"
                       ></ha-icon>
