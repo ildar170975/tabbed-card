@@ -6,7 +6,7 @@ import {
   customElement,
   property
 } from "lit-element";
-import { state } from "lit/decorators.js";
+//import { state } from "lit/decorators.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import {
@@ -57,8 +57,10 @@ export class TabbedCard extends LitElement {
   @property() protected selectedTabIndex = 0;
   @property() private _helpers: any;
 
-  @state() private _config!: TabbedCardConfig;
-  @state() private _tabs!: Tab[];
+  // @state() private _config!: TabbedCardConfig;
+  // @state() private _tabs!: Tab[];
+  private _config!: TabbedCardConfig;
+  private _tabs!: Tab[];
   @property() protected _styles = {
     "--mdc-theme-primary": "var(--primary-text-color)", // Color of the activated tab's text, indicator, and ripple.
     "--mdc-tab-text-label-color-default":
