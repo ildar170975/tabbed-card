@@ -80,8 +80,9 @@ export class TabbedCard extends LitElement {
             type: "entity",
             entity: "sun.sun"
           },
-         attributes: { label: "Sun" }
-        }],
+         attributes: { .label: "Sun" }
+        }
+      ],
     };
   }
 
@@ -113,13 +114,13 @@ export class TabbedCard extends LitElement {
 
   async _createTabs(config: TabbedCardConfig) {
     const tabs = await Promise.all(
-      config.tabs.map(async (tab) => {
+      config.tabs.map(async tab => {
         return {
           styles: tab?.styles,
           attributes: { ...config?.attributes, ...tab?.attributes },
           card: await this._createCard(tab.card)
         };
-      }),
+      })
     );
 
     this._tabs = tabs;
@@ -173,12 +174,11 @@ export class TabbedCard extends LitElement {
           tab =>
             html`
               <mwc-tab
-                .id="mdc-tab-${
-                  tab?.attributes?.persistentID ? tab?.attributes.persistentID + '-' : ''
-                }${Math.random()
+                .id="mdc-tab-${tab?.attributes?.persistentID ? tab?.attributes.persistentID + '-' : ''}
+                  ${Math.random()
                     .toString(36)
                     .substring(2,9)
-                }"
+                  }"
                 style=${ifDefined(styleMap(tab?.styles || {}))}
                 label="${tab?.attributes?.label || nothing}"
                 ?hasImageIcon=${tab?.attributes?.icon}
@@ -189,11 +189,11 @@ export class TabbedCard extends LitElement {
               >
                 ${tab?.attributes?.icon
                   ? html`
-                    <ha-icon
+                      <ha-icon
                         slot="icon"
                         icon="${tab?.attributes?.icon}"
                       ></ha-icon>
-                      `
+                    `
                   : html``}
               </mwc-tab>
             `
