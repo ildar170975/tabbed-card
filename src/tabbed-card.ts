@@ -13,7 +13,7 @@ import {
 } from "custom-card-helpers";
 import "./tabbed-card-editor";
 
-interface mwcTabBarEvent extends Event {
+interface MwcTabBarEvent extends Event {
   detail: {
     index: number;
   };
@@ -64,7 +64,7 @@ export class TabbedCard extends LitElement {
     this._helpers = await (window as any).loadCardHelpers();
 
     if (!customElements.get("mwc-tab-bar"))
-      this._helpers.importMoreInfoControl("weather")
+      this._helpers.importMoreInfoControl("weather");
   }
 
   static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -74,7 +74,11 @@ export class TabbedCard extends LitElement {
   static getStubConfig() {
     return {
       options: {},
-      tabs: [{ card: { type: "entity", entity: "sun.sun" }, attributes: { label: "Sun" } }],
+      tabs: [
+        { card: {
+          type: "entity", entity: "sun.sun" },
+         attributes: { label: "Sun" }
+        }],
     };
   }
 
@@ -120,7 +124,7 @@ export class TabbedCard extends LitElement {
 
   async _createCard(cardConfig: LovelaceCardConfig) {
     const cardElement = await this._helpers.createCardElement(cardConfig);
-    let i = 0;
+    const i = 0;
     cardElement.hass = this.hass;
 
     cardElement.addEventListener(
@@ -156,7 +160,7 @@ export class TabbedCard extends LitElement {
 
     return html`
       <mwc-tab-bar
-        @MDCTabBar:activated=${(ev: mwcTabBarEvent) =>
+        @MDCTabBar:activated=${(ev: MwcTabBarEvent) =>
           (this.selectedTabIndex = ev.detail.index)}
         style=${styleMap(this._styles)}
         activeIndex=${ifDefined(this._config?.options?.defaultTabIndex)}
@@ -180,13 +184,15 @@ export class TabbedCard extends LitElement {
                 ?stacked=${tab?.attributes?.stacked}
               >
                 ${tab?.attributes?.icon
-                  ? html`<ha-icon
-                      slot="icon"
-                      icon="${tab?.attributes?.icon}"
-                    ></ha-icon>`
+                  ? html`
+                      <ha-icon
+                        slot="icon"
+                        icon="${tab?.attributes?.icon}"
+                      ></ha-icon>
+                      `
                   : html``}
               </mwc-tab>
-            `,
+            `
         )}
       </mwc-tab-bar>
       <section>
@@ -208,5 +214,5 @@ declare global {
 (window as any).customCards.push({
   type: "tabbed-card",
   name: "Tabbed Card",
-  description: "A tabbed card of cards.",
+  description: "A tabbed card of cards."
 });
