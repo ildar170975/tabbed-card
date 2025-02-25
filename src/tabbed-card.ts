@@ -1,4 +1,5 @@
-import { LitElement, html, PropertyValues, nothing } from "lit-element";
+import { nothing } from "lit-html";
+import { LitElement, html, PropertyValues } from "lit-element";
 import { customElement, state, property } from "lit/decorators.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
