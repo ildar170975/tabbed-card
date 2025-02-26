@@ -2,7 +2,7 @@ import {
   ActionConfig,
   LovelaceCard,
   LovelaceCardConfig,
-  LovelaceCardEditor,
+  LovelaceCardEditor
 } from "custom-card-helpers";
 
 declare global {

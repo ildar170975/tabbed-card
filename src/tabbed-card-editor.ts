@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  LitElement,
+  LitElement
   // html,
   // TemplateResult,
   // css,
@@ -10,7 +10,7 @@ import {
   // HomeAssistant,
   // fireEvent,
   LovelaceCardEditor,
-  LovelaceCard,
+  LovelaceCard
 } from "custom-card-helpers";
 
 // import { ScopedRegistryHost } from "@lit-labs/scoped-registry-mixin";

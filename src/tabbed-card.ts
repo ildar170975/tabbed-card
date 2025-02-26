@@ -1,7 +1,9 @@
-import { LitElement, html, PropertyValueMap, nothing } from "lit";
-import { customElement, state, property } from "lit/decorators.js";
-import { styleMap } from "lit/directives/style-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
+import { nothing, PropertyValueMap } from "lit-html";
+import { LitElement, html, customElement, property } from "lit-element";
+//import { PropertyValueMap } from "lit-";
+//import { state } from "lit/decorators.js";
+import { styleMap } from "lit-html/directives/style-map.js";
+import { ifDefined } from "lit-html/directives/if-defined.js";
 import {
   getLovelace,
   hasConfigOrEntityChanged,
@@ -9,24 +11,24 @@ import {
   LovelaceCard,
   LovelaceCardConfig,
   LovelaceCardEditor,
-  LovelaceConfig,
+  LovelaceConfig
 } from "custom-card-helpers";
 import "./tabbed-card-editor";
 
-interface mwcTabBarEvent extends Event {
+interface MwcTabBarEvent extends Event {
   detail: {
     index: number;
   };
 }
 
 interface TabbedCardConfig extends LovelaceCardConfig {
-  options?: options;
+  options?: Options;
   styles?: {};
   attributes?: {};
   tabs: Tab[];
 }
 
-interface options {
+interface Options {
   defaultTabIndex?: number;
 }
 
@@ -50,20 +52,23 @@ export class TabbedCard extends LitElement {
   @property() protected selectedTabIndex = 0;
   @property() private _helpers: any;
 
-  @state() private _config!: TabbedCardConfig;
-  @state() private _tabs!: Tab[];
+  // @state() private _config!: TabbedCardConfig;
+  // @state() private _tabs!: Tab[];
+  private _config!: TabbedCardConfig;
+  private _tabs!: Tab[];
   @property() protected _styles = {
     "--mdc-theme-primary": "var(--primary-text-color)", // Color of the activated tab's text, indicator, and ripple.
     "--mdc-tab-text-label-color-default":
       "rgba(var(--rgb-primary-text-color), 0.8)", // Color of an unactivated tab label.
     "--mdc-tab-color-default": "rgba(var(--rgb-primary-text-color), 0.7)", // Color of an unactivated icon.
-    "--mdc-typography-button-font-size": "14px",
+    "--mdc-typography-button-font-size": "14px"
   };
 
   private async loadCardHelpers() {
     this._helpers = await (window as any).loadCardHelpers();
 
-    if (!customElements.get("mwc-tab-bar")) this._helpers.importMoreInfoControl("weather")
+    if (!customElements.get("mwc-tab-bar"))
+      this._helpers.importMoreInfoControl("weather");
   }
 
   static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -73,7 +78,15 @@ export class TabbedCard extends LitElement {
   static getStubConfig() {
     return {
       options: {},
-      tabs: [{ card: { type: "entity", entity: "sun.sun" }, attributes: { label: "Sun" } }],
+      tabs: [
+        {
+          card: {
+            type: "entity",
+            entity: "sun.sun"
+          },
+          attributes: { label: "Sun" }
+        }
+      ]
     };
   }
 
@@ -86,32 +99,32 @@ export class TabbedCard extends LitElement {
 
     this._styles = {
       ...this._styles,
-      ...this._config.styles,
+      ...this._config.styles
     };
 
     this.loadCardHelpers();
   }
 
   protected willUpdate(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>,
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     if (_changedProperties.has("_helpers")) {
       this._createTabs(this._config);
     }
     if (_changedProperties.has("hass") && this._tabs?.length) {
-      this._tabs.forEach((tab) => (tab.card.hass = this.hass));
+      this._tabs.forEach(tab => (tab.card.hass = this.hass));
     }
   }
 
   async _createTabs(config: TabbedCardConfig) {
     const tabs = await Promise.all(
-      config.tabs.map(async (tab) => {
+      config.tabs.map(async tab => {
         return {
           styles: tab?.styles,
           attributes: { ...config?.attributes, ...tab?.attributes },
-          card: await this._createCard(tab.card),
+          card: await this._createCard(tab.card)
         };
-      }),
+      })
     );
 
     this._tabs = tabs;
@@ -119,7 +132,7 @@ export class TabbedCard extends LitElement {
 
   async _createCard(cardConfig: LovelaceCardConfig) {
     const cardElement = await this._helpers.createCardElement(cardConfig);
-    let i=1;
+    const i = 0;
     cardElement.hass = this.hass;
 
     cardElement.addEventListener(
@@ -128,7 +141,7 @@ export class TabbedCard extends LitElement {
         ev.stopPropagation();
         this._rebuildCard(cardElement, cardConfig);
       },
-      { once: true },
+      { once: true }
     );
 
     return cardElement;
@@ -136,7 +149,7 @@ export class TabbedCard extends LitElement {
 
   async _rebuildCard(
     cardElement: LovelaceCard,
-    cardConfig: LovelaceCardConfig,
+    cardConfig: LovelaceCardConfig
   ) {
     console.log("_rebuildCard: ", cardElement, cardConfig);
 
@@ -155,21 +168,22 @@ export class TabbedCard extends LitElement {
 
     return html`
       <mwc-tab-bar
-        @MDCTabBar:activated=${(ev: mwcTabBarEvent) =>
+        @MDCTabBar:activated=${(ev: MwcTabBarEvent) =>
           (this.selectedTabIndex = ev.detail.index)}
         style=${styleMap(this._styles)}
         activeIndex=${ifDefined(this._config?.options?.defaultTabIndex)}
       >
         <!-- no horizontal scrollbar shown when tabs overflow in chrome -->
         ${this._tabs.map(
-          (tab) =>
+          tab =>
             html`
               <mwc-tab
-                .id="mdc-tab-${
-                  tab?.attributes?.persistentID ? tab?.attributes.persistentID + '-' : ''
-                }${
-                  Math.random().toString(36).substring(2,9)
-                }"
+                .id="mdc-tab-${tab?.attributes?.persistentID
+                  ? tab?.attributes.persistentID + "-"
+                  : ""}
+                  ${Math.random()
+                  .toString(36)
+                  .substring(2, 9)}"
                 style=${ifDefined(styleMap(tab?.styles || {}))}
                 label="${tab?.attributes?.label || nothing}"
                 ?hasImageIcon=${tab?.attributes?.icon}
@@ -179,13 +193,15 @@ export class TabbedCard extends LitElement {
                 ?stacked=${tab?.attributes?.stacked}
               >
                 ${tab?.attributes?.icon
-                  ? html`<ha-icon
-                      slot="icon"
-                      icon="${tab?.attributes?.icon}"
-                    ></ha-icon>`
+                  ? html`
+                      <ha-icon
+                        slot="icon"
+                        icon="${tab?.attributes?.icon}"
+                      ></ha-icon>
+                    `
                   : html``}
               </mwc-tab>
-            `,
+            `
         )}
       </mwc-tab-bar>
       <section>
@@ -207,5 +223,5 @@ declare global {
 (window as any).customCards.push({
   type: "tabbed-card",
   name: "Tabbed Card",
-  description: "A tabbed card of cards.",
+  description: "A tabbed card of cards."
 });
